@@ -1,0 +1,16 @@
+google.com {
+    file /etc/coredns/google.root
+}
+
+bing.com {
+    file /etc/coredns/bing.root
+}
+
+. {
+    log
+    debug
+    errors
+    auto
+    reload 2s
+    forward . /etc/resolv.conf
+}

@@ -1,0 +1,17 @@
+$TTL 3600              ; default time to live for this zone (1 hour)
+@    IN    SOA   ns1.example.com. admin.example.com. (
+                2024090801 ; serial number (format: YYYYMMDDXX)
+                3600       ; refresh time (1 hour)
+                1800       ; retry time (30 minutes)
+                604800     ; expire time (1 week)
+                86400      ; minimum TTL (1 day)
+                )
+
+; Define the nameserver for the root zone
+@    IN    NS    ns1.example.com.
+
+; A record for the nameserver itself
+ns1.example.com. IN    A    10.5.0.6
+
+; CNAME records
+@       IN    CNAME    app-2.

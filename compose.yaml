@@ -1,0 +1,47 @@
+services:
+  coredns:
+    image: coredns/coredns:1.11.1
+    container_name: coredns
+    ports:
+      - "5050:53"
+      - "5051:53/udp"
+    volumes:
+      - ./coredns:/etc/coredns
+    command: -conf /etc/coredns/Corefile
+    networks:
+      proxy:
+        ipv4_address: 10.5.0.6
+  bastion:
+    image: ubuntu:24.04
+    container_name: bastion
+    networks:
+      proxy:
+        ipv4_address: 10.5.0.9
+    command: sh -c "apt update && apt install -y curl dnsutils iputils-ping iptables tcpdump strace vim && sleep 20000000000000"
+    privileged: true
+
+  app-1:
+    container_name: app-1
+    image: localhost/app
+    environment:
+      - PORT=8085
+    networks:
+      proxy:
+        ipv4_address: 10.5.0.7
+
+  app-2:
+    container_name: app-2
+    image: localhost/app
+    environment:
+      - PORT=8086
+    networks:
+      proxy:
+        ipv4_address: 10.5.0.8
+
+networks:
+  proxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

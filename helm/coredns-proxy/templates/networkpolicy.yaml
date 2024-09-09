@@ -1,0 +1,22 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: redirect-google-to-eks
+spec:
+  endpointSelector:
+    matchLabels:
+        app: {{ include "coredns-proxy.fullname" . }}-1
+  egress:
+    - toFQDNs:
+        - matchName: google.com
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
+          rules:
+            http:
+              - method: "GET"
+      redirect:
+        toService: 
+          namespace: default
+          name: {{ include "coredns-proxy.fullname" . }}-2

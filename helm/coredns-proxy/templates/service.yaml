@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "coredns-proxy.fullname" . }}-1
+  labels:
+    {{- include "coredns-proxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "coredns-proxy.fullname" . }}-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "coredns-proxy.fullname" . }}-2
+  labels:
+    {{- include "coredns-proxy.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "coredns-proxy.fullname" . }}-2
+---
