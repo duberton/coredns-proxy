@@ -1,14 +1,10 @@
-google.com {
-    file /etc/coredns/google.root
-}
-
-bing.com {
-    file /etc/coredns/bing.root
-}
-
 . {
     log
     debug
+    template IN ANY google.com {
+        match "^google\.com\.$"
+        answer "google.com 60 IN CNAME app-1."
+    }
     errors
     auto
     reload 2s

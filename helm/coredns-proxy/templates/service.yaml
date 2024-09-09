@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ include "coredns-proxy.fullname" . }}-1
   labels:
-    {{- include "coredns-proxy.labels" . | nindent 4 }}
+    svc: {{ include "coredns-proxy.fullname" . }}-1
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 8085
       targetPort: http
       protocol: TCP
       name: http
@@ -19,11 +19,11 @@ kind: Service
 metadata:
   name: {{ include "coredns-proxy.fullname" . }}-2
   labels:
-    {{- include "coredns-proxy.labels" . | nindent 4 }}
+    svc: {{ include "coredns-proxy.fullname" . }}-2
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 8086
       targetPort: http
       protocol: TCP
       name: http
