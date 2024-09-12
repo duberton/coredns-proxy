@@ -5,6 +5,10 @@
         match "^google\.com\.$"
         answer "google.com 60 IN CNAME app-1."
     }
+    template IN ANY bing.com {
+        match "^bing\.com\.$"
+        answer "bing.com 60 IN CNAME app-2."
+    }
     errors
     auto
     reload 2s

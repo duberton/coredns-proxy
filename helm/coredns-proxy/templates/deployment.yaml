@@ -43,7 +43,7 @@ spec:
               value: "8085"
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 8085
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -121,7 +121,7 @@ spec:
               value: "8086"
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 8086
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:
